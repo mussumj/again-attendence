@@ -63,26 +63,23 @@ public class viewgui extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "s.no", "name", "class", "section", "address", "father name", "Edit/view"
+                "ID", "Name", "Class", "Section", "Father Name", "Edit/View", "   Delete", "Present"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
+
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -111,6 +108,8 @@ public class viewgui extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "A1", "B1", "B2" }));
 
+        save.setText("SAVE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,27 +117,34 @@ public class viewgui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114)
+                .addGap(32, 32, 32)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(129, 129, 129))
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(save)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(17, 17, 17)
+                .addComponent(save))
         );
 
         pack();
@@ -182,7 +188,8 @@ public class viewgui extends javax.swing.JFrame {
              count=count+1;
     
         }
-        jTable1.getColumn("Edit/view").setCellRenderer(new LabelRender());
+        jTable1.getColumn("Edit/View").setCellRenderer(new LabelRender());
+        jTable1.getColumn("   Delete").setCellRenderer(new LabelRender1());
        //  jTable1.getColumn("Add/Edit/view").setCellRenderer(new LabelRender());
         }
         catch(Exception e)
@@ -196,7 +203,8 @@ public class viewgui extends javax.swing.JFrame {
       
     //  Component c= jTable1.getComponentAt(p);
      JTable j= (JTable) evt.getSource();
-     System.out.println(j.getSelectedColumn());
+     System.out.println("table column"+" "+j.getSelectedColumn());
+      System.out.println("table column"+" "+j.getRowCount());
   
   
    //   c.setBackground(Color.red);
@@ -277,8 +285,10 @@ obj.upDateClass();
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton save;
     // End of variables declaration//GEN-END:variables
 }
 class LabelRender implements TableCellRenderer {
@@ -319,41 +329,51 @@ class LabelRender implements TableCellRenderer {
           // System.out.println( panel.getComponentCount());
          //  panel.addMouseListener(new MouseListen());
       
-         System.out.println("hiiii");
+         //System.out.println("hiiii");
             return panel;
     }
 
 }
-class MouseListen implements MouseListener{
+class LabelRender1 implements TableCellRenderer {
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      System.out.println("panel clicked");
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+
+    private JLabel label;
+    private JLabel label2;
+    private ImageIcon icon;
+ private ImageIcon icon1;
+
+    public LabelRender1()
+
+    {
+        icon=new ImageIcon(getClass().getResource("/attendence/icons8-trash-20.png"));
+       // icon1=new ImageIcon(getClass().getResource("/attendence/pencil-20.png"));
+        label = new JLabel();
+        label2=new JLabel();
+
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-     System.out.println("panel pressed");
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-       System.out.println("panel relesed");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-       System.out.println("panel entered");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Component getTableCellRendererComponent (
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-       System.out.println("panel exited");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            JTable table, Object value, boolean isSelected,
+
+            boolean hasFocus, final int row, final int column)
+
+        {
+            JPanel panel = new JPanel();
+            
+        label.setIcon(icon);
+        //label2.setIcon(icon1);
+        
+        panel.add(label);
+         //  panel.add(label2);
+          // System.out.println( panel.getComponentCount());
+         //  panel.addMouseListener(new MouseListen());
+      
+         System.out.println("hiiii");
+            return panel;
     }
 
 }

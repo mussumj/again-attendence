@@ -5,6 +5,9 @@
  */
 package attendence;
 
+//import static attendence.Attendence.con;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +21,9 @@ import java.util.Scanner;
 public class AddStudent {
      
      
-     void addStudent() throws SQLException{
-     Attendence a=new Attendence();
-     Scanner scanner = new Scanner(System.in);
+     void addStudent(String ID,String Class,String section,String name,String Fname,String fnum,String Aadhar,String address,String photo,Connection con) throws SQLException{
+    // Attendence a=new Attendence();
+   /*  Scanner scanner = new Scanner(System.in);
      String Id = scanner. nextLine();
      String name = scanner. nextLine();   
      String Class = scanner. nextLine();
@@ -28,22 +31,24 @@ public class AddStudent {
      String Fname = scanner. nextLine();
      String Fnum = scanner. nextLine();
      
-     
+     */
      //Statement stmt=a.con.createStatement(); 
          
          
          
-     String sql="insert into mysql2.student values (?,?,?,?,?,?)";
+     String sql="insert into mystudent.student values (?,?,?,?,?,?,?,?,?)";
 
-     PreparedStatement pst=a.con.prepareStatement(sql);
+     PreparedStatement pst=con.prepareStatement(sql);
 
-     pst.setString(1,Id);
-     pst.setString(2,name);
-     pst.setString(3,Class);
-     pst.setString(4,section);
+     pst.setString(1,ID);
+     pst.setString(4,name);
+     pst.setString(2,Class);
+     pst.setString(3,section);
      pst.setString(5,Fname);
-     pst.setString(6,Fnum);
-     
+     pst.setString(6,fnum);
+     pst.setString(7,Aadhar);
+      pst.setString(8,address);
+       pst.setString(9,photo);
     pst.executeUpdate();
     System.out.println("row enterd successfully");
     
