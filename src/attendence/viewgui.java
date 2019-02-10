@@ -18,6 +18,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.Date;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
@@ -38,7 +40,7 @@ public class viewgui extends javax.swing.JFrame {
      */
    // String[]classlist={};
    static DefaultComboBoxModel<String>ar=new DefaultComboBoxModel<String>();
-    
+   
    JLabel jLabel2;
     int count=1;
   //  private Object jLable2;
@@ -65,6 +67,7 @@ public class viewgui extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         save = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +94,7 @@ public class viewgui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jButton1.setText("View");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,25 +103,45 @@ public class viewgui extends javax.swing.JFrame {
         });
 
         jComboBox1.setFont(new java.awt.Font("Aharoni", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "whole school" }));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jComboBox1MouseClicked(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "A1", "B1", "B2" }));
+        jComboBox2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        jComboBox2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox2MouseClicked(evt);
+            }
+        });
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
+        save.setFont(new java.awt.Font("Traditional Arabic", 1, 14)); // NOI18N
         save.setText("SAVE");
+
+        jButton2.setFont(new java.awt.Font("Traditional Arabic", 1, 14)); // NOI18N
+        jButton2.setText("Absent");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(76, 76, 76)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,14 +151,17 @@ public class viewgui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(save)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(85, 85, 85)
+                        .addComponent(save))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
@@ -143,8 +170,10 @@ public class viewgui extends javax.swing.JFrame {
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(save))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2)
+                    .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -211,17 +240,84 @@ public class viewgui extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+        System.out.println("hey this is class drop down");
         jComboBox1.setModel(ar);
         System.out.println(ar);
            
     }//GEN-LAST:event_jComboBox1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String Class=(String) jComboBox1.getSelectedItem();
+        String Section=(String) jComboBox1.getSelectedItem();
+        if(Section.equals('-'))
+        {
+       Section=null; 
+        }
+      //  Date d=(Date) 
+        String holiday="yes";
+       String s="insert into mystudent.holiday values (?,?,?,?)";
+        java.sql.Date sDate =new java.sql.Date( jDateChooser1.getDate().getTime());
+        PreparedStatement pst;
+       try {
+           pst = con.prepareStatement(s);
+           pst.setDate(1,sDate );
+           pst.setString(2, Class);
+           pst.setString(3, Section);
+           pst.setString(4, holiday);
+           
+           ResultSet rs=pst.executeQuery();
+       } catch (SQLException ex) {
+           Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
+       }
+             
+          
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox2MouseClicked
+        // TODO add your handling code here:
+       DefaultComboBoxModel<String>Sec=new DefaultComboBoxModel<String>();  
+       // Sec.addElement(" ");
+       //  jComboBox2.setModel(Sec);
+         System.out.println("hey this is section dropdown");
+        try {
+           //</editor-fold>
+           con=DriverManager.getConnection(  
+                   "jdbc:mysql://localhost:3306/mystudent","musarrat","jinglebell25");
+       } catch (SQLException ex) {
+           Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        try{
+        PreparedStatement pst=con.prepareStatement("select studentsection from mystudent.studentclasses where studentclass=?");
+        pst.setString(1, (String) jComboBox1.getSelectedItem());
+        ResultSet rs=pst.executeQuery(); 
+        while(rs.next())
+        {System.out.println(rs.getString("studentsection"));
+            Sec.addElement(rs.getString("studentsection"));
+        }
+        }
+        catch(Exception e)
+        {System.out.println(e);}
+       jComboBox2.setModel(Sec);
+    }//GEN-LAST:event_jComboBox2MouseClicked
  void upDateClass(){
     try {
            // TODO add your handling code here:
            
            Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection(  
-            "jdbc:mysql://localhost:3306/mystudent","musarrat","jinglebell25");  
+           try {
+           //</editor-fold>
+           con=DriverManager.getConnection(  
+                   "jdbc:mysql://localhost:3306/mystudent","musarrat","jinglebell25");
+       } catch (SQLException ex) {
+           Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
+       }
+            
             String s="select distinct studentclass from mystudent.studentclasses";
             PreparedStatement pst=con.prepareStatement(s);
             ResultSet rs=pst.executeQuery(); 
@@ -229,13 +325,13 @@ public class viewgui extends javax.swing.JFrame {
            
             // jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"No Class" }));
            //   jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(classlist));
-              jComboBox1.setModel(ar);
+              
             while (rs.next())
             {System.out.println(rs.getString("studentclass")); 
                // jComboBox1.addItem(rs.getString("studentclass"));
                ar.addElement(rs.getString("studentclass"));
             }
-            
+         //   jComboBox1.setModel(ar);
        } catch (ClassNotFoundException ex) {
            Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
        } catch (SQLException ex) {
@@ -268,8 +364,8 @@ public class viewgui extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(viewgui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-ar.addElement("No class");
+       
+        ar.addElement("whole school");
 viewgui obj=new viewgui();
 obj.upDateClass();
         /* Create and display the form */
@@ -283,6 +379,7 @@ obj.upDateClass();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
