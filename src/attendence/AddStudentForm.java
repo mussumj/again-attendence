@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Model.Student;
 //import static attendence.Attendence.con;
+import javax.swing.JOptionPane;
 import java.sql.*;
 import attendence.AddStudent;
 import java.util.logging.Level;
@@ -152,7 +153,7 @@ static AddStudent ad;
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Class");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "A1", "B1" }));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("ID");
@@ -339,7 +340,17 @@ static AddStudent ad;
         obj.Class=(String) jComboBox1.getSelectedItem();
         obj.section=(String) jComboBox2.getSelectedItem();
      try {
+        
          ad.addStudent(obj.ID, obj.Class, obj.section,obj.name, obj.fname, obj.fnum, obj.Aadhar, obj.address,obj.photo, con);
+         JOptionPane.showMessageDialog(null, "Student Added");
+         name.setText("");
+         fathername.setText("");
+       number.setText("");
+        aadharnum.setText("");
+        
+        address.setText("");
+         ID.setText("");
+         
      } catch (SQLException ex) {
          Logger.getLogger(AddStudentForm.class.getName()).log(Level.SEVERE, null, ex);
      }
