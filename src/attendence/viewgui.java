@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
-import attendence.CRenderer;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
@@ -143,8 +143,8 @@ public class viewgui extends javax.swing.JFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(129, 129, 129))
@@ -196,23 +196,26 @@ public class viewgui extends javax.swing.JFrame {
             String dropclass= (String) jComboBox1.getSelectedItem();
             String dropsec=(String)jComboBox2.getSelectedItem();
             System.out.println(dropclass);
-            if(!(dropclass.equals('0')))
-            {  System.out.println("here");
-                s="select name,class,section,address,fname from mystudent.student where class=? AND section=?";
+         //  if(!(dropclass.equals('0')))
+        //   { 
+               System.out.println("here");
+           
+                s="select ID,name,class,section,address,fname from mystudent.student where class=? AND section=?";
                pst=con.prepareStatement(s);
                 pst.setString(1, dropclass);
                 pst.setString(2,dropsec);
-            }
-            else
-            { s="select name,class,section,address,fname from mystudent.student";
-            pst=con.prepareStatement(s);}
+          // }
+          // else
+          // { s="select name,class,section,address,fname from mystudent.student";
+         //   pst=con.prepareStatement(s);
+         //  }
             ResultSet rs=pst.executeQuery();
             tm.setRowCount(0);
         while(rs.next())
     
         {
              System.out.println(rs.getString("name")+rs.getString("class")+rs.getString("section")+rs.getString("address")+rs.getString("fname"));
-             Object o[]={count,rs.getString("name"),rs.getString("class"),rs.getString("section"),rs.getString("address"),rs.getString("fname")};
+             Object o[]={rs.getString("ID"),rs.getString("name"),rs.getString("class"),rs.getString("section"),rs.getString("address"),rs.getString("fname")};
              tm.addRow(o);
              count=count+1;
     
@@ -233,7 +236,28 @@ public class viewgui extends javax.swing.JFrame {
     //  Component c= jTable1.getComponentAt(p);
      JTable j= (JTable) evt.getSource();
      System.out.println("table column"+" "+j.getSelectedColumn());
-      System.out.println("table column"+" "+j.getRowCount());
+      System.out.println("table column"+" "+j.getSelectedRow());
+      if(j.getSelectedColumn()==5)
+      {
+          System.out.println("Edit function called");
+        //  int id=(int) jTable1.getModel().getValueAt(j.getSelectedRow(), 0);
+         
+          String sid=(String) jTable1.getModel().getValueAt(j.getSelectedRow(), 0);
+          System.out.println(sid);
+        //  editview obj1=new editview();
+          edit obj2=new edit();
+           try {
+               obj2.setname(sid);
+           } catch (SQLException ex) {
+               Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(viewgui.class.getName()).log(Level.SEVERE, null, ex);
+           }
+      }
+      if(j.getSelectedColumn()==6)
+      {
+          System.out.println("Delete function called");
+      }
   
   
    //   c.setBackground(Color.red);
@@ -242,7 +266,7 @@ public class viewgui extends javax.swing.JFrame {
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
         System.out.println("hey this is class drop down");
         jComboBox1.setModel(ar);
-        System.out.println(ar);
+        //System.out.println(ar);
            
     }//GEN-LAST:event_jComboBox1MouseClicked
 
@@ -284,7 +308,7 @@ public class viewgui extends javax.swing.JFrame {
        DefaultComboBoxModel<String>Sec=new DefaultComboBoxModel<String>();  
        // Sec.addElement(" ");
        //  jComboBox2.setModel(Sec);
-         System.out.println("hey this is section dropdown");
+        // System.out.println("hey this is section dropdown");
         try {
            //</editor-fold>
            con=DriverManager.getConnection(  
@@ -469,7 +493,7 @@ class LabelRender1 implements TableCellRenderer {
           // System.out.println( panel.getComponentCount());
          //  panel.addMouseListener(new MouseListen());
       
-         System.out.println("hiiii");
+     //    System.out.println("hiiii");
             return panel;
     }
 

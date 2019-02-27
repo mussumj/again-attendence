@@ -24,7 +24,7 @@ public class EditStudent {
      String Fnum = scanner. nextLine();
      String Class = scanner. nextLine();
      String section = scanner. nextLine(); 
-     String sql="update mysql2.student set name=?,class=? where Id=? OR name=? ;";
+     String sql="update mysql2.student set name=?,class=?, where Id=? OR name=? ;";
 
      PreparedStatement pst=a.con.prepareStatement(sql);
       pst.setString(1,name);
